@@ -14,14 +14,25 @@
 //
 // ==/UserScript==
 
-/* 
- *	School selection
- *
- *	This code tells us what school we're working with.
- *	This is helpful for things like hiding or showing 
- *	inactive tabs.
- *
- */
+/* -------- Configurable Global variables ----------- */
+
+var stylesheetURL = "http://raw.github.com/MosheBerman/StudentsFirst/master/css/sf.css";
+var petitionLink = "http://www.change.org/petitions/city-university-of-new-york-fix-cuny-first";
+
+/* -------- Scraping related Global variables ----------- */
+
+var pages = ["unknown", "default", "self service", "login", "claim"];
+
+// Slugs and stuff to help find pages
+var claimSlug = "selfservice/activation/start.action";	//	Sign Up page
+var loginSlug = "Portal_Login1.html";	//	Log in page
+var defaultPageParam = "tab=DEFAULT";	//	Default page
+var selfServiceParam = "pt_fname=CO_EMPLOYEE_SELF_SERVICE";	//	The self service page
+
+//A link to the control panel page - it has an iFrame which we want to load as *the* page.
+var selfServiceFrameLink = "https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/EMPLOYEE/HRMS/s/WEBLIB_PTPP_SC.HOMEPAGE.FieldFormula.IScript_AppHP?pt_fname=CO_EMPLOYEE_SELF_SERVICE&PortalActualURL=https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/EMPLOYEE/HRMS/s/WEBLIB_PTPP_SC.HOMEPAGE.FieldFormula.IScript_AppHP&PortalContentURL=https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/EMPLOYEE/HRMS/s/WEBLIB_PTPP_SC.HOMEPAGE.FieldFormula.IScript_AppHP&PortalContentProvider=HRMS&PortalCRefLabel=Base%20Navigation%20Page&PortalRegistryName=EMPLOYEE&PortalServletURI=https://hrsa.cunyfirst.cuny.edu/psp/cnyhcprd/&PortalURI=https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/&PortalHostNode=HRMS&NoCrumbs=yes&PortalCacheContent=true&PSCache-Control=max-age%3d360%2crole&PortalKeyStruct=yes"
+var logoutLink = "https://hrsa.cunyfirst.cuny.edu/psp/cnyhcprd/EMPLOYEE/HRMS/?cmd=logout";
+
 
 var schoolNames = ["Baruch",
 "Borough of Manhattan Community College",
@@ -49,6 +60,15 @@ var schoolNames = ["Baruch",
 "York College"
 ];
 
+/* 
+ *	School selection
+ *
+ *	This code tells us what school we're working with.
+ *	This is helpful for things like hiding or showing 
+ *	inactive tabs.
+ *
+ */
+
 function currentSchool()
 {
 	// For now, stick to BC
@@ -63,20 +83,6 @@ function currentSchool()
  *
  */
 
-/*
- *	IMPORTANT: This drives a lot of the logic flow.
- * 	An array of pages we know about...
- */
-
-var pages = ["unknown", "default", "self service", "login", "claim"];
-
-// Slugs and stuff to help find pages
-var claimSlug = "selfservice/activation/start.action";	//	Sign Up page
-var loginSlug = "Portal_Login";	//	Log in page
-var defaultPageParam = "tab=DEFAULT";	//	Default page
-var selfServiceParam = "pt_fname=CO_EMPLOYEE_SELF_SERVICE";	//	The self service page
-
-/* This function attempts to determine the current page based on the URL. */
 function getCurrentPage ()
 {
 
@@ -84,7 +90,7 @@ function getCurrentPage ()
 	var params = URLParams(window.location.toString());
 
 	// If the defaultPageSlug is in the array, we're in the default page	
-	if(contains(params, defaultPageParam))
+	if(contains(params, defaultPageParam) && params.length == 1)
 	{
 		return pages[1]		//	Default tab
 	}
@@ -96,13 +102,13 @@ function getCurrentPage ()
 	}
 
 	//	If we've got the login slug, so we're at the log in page
-	else if(location.search(loginSlug))
+	else if(containsSubstring(location, loginSlug))
 	{
 		return pages[3];
 	}
 
 	//	If the URL contains the claim page slug, we're in the claim your ID page
-	else if(location.search(claimSlug) >= 0)
+	else if(containsSubstring(location, claimSlug))
 	{
 		return pages[4];	//	Claim page
 	}
@@ -111,21 +117,27 @@ function getCurrentPage ()
 	return pages[0];
 }
 
-// A link to the control panel page - it has an iFrame which we want to load as *the* page.
-var selfServiceLink = "https://hrsa.cunyfirst.cuny.edu/psp/cnyhcprd/EMPLOYEE/HRMS/s/WEBLIB_PTPP_SC.HOMEPAGE.FieldFormula.IScript_AppHP?pt_fname=CO_EMPLOYEE_SELF_SERVICE";
-
-//	This is the page we actually want to see when we log in/
-var selfServiceFrameLink = "https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/EMPLOYEE/HRMS/s/WEBLIB_PTPP_SC.HOMEPAGE.FieldFormula.IScript_AppHP?pt_fname=CO_EMPLOYEE_SELF_SERVICE&PortalActualURL=https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/EMPLOYEE/HRMS/s/WEBLIB_PTPP_SC.HOMEPAGE.FieldFormula.IScript_AppHP&PortalContentURL=https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/EMPLOYEE/HRMS/s/WEBLIB_PTPP_SC.HOMEPAGE.FieldFormula.IScript_AppHP&PortalContentProvider=HRMS&PortalCRefLabel=Base%20Navigation%20Page&PortalRegistryName=EMPLOYEE&PortalServletURI=https://hrsa.cunyfirst.cuny.edu/psp/cnyhcprd/&PortalURI=https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/&PortalHostNode=HRMS&NoCrumbs=yes&PortalCacheContent=true&PSCache-Control=max-age%3d360%2crole&PortalKeyStruct=yes"
-
 /* Entry point of the script, called above. */
 
 function main()
 {
+
+	//	Debug confirmation - show that the script is installed
 	console.log("Students First is running. I'm so sorry we have to do this...");
-	
+
+	/* Do some global cleanup first...*/
+
+	//	Install a fresh stylesheet
+	installCSS();
+
+	//	Clean up breadcrumbs and titles...
+	cleanPage();
+
+	//	Detect the current page and take action! Action, I say!
 	var currentPage = getCurrentPage();
 
-	console.log("[SF] Page Key:" currentPage);
+	//	Log out the current page key
+	console.log("[SF] Page Key: " + currentPage);
 
 	if(currentPage == pages[1])
 	{
@@ -137,18 +149,21 @@ function main()
 	else if(currentPage == pages[2])
 	{
 		//	self service
+		mainMenu();
 	}
 	else if(currentPage == pages[3])
 	{
-
+		//	Login
+		mainMenuLoginPage();
 	}
 	else if(currentPage == pages[4])
 	{
-
+		//	Claim your ID page
 	}
 	else
 	{
-		//Unknown
+		//Unknown - General clean up	
+		mainMenu();
 	}
 }
 
@@ -160,7 +175,6 @@ function main()
 
  function goToSelfService()
  {
- 	console.log('Redirecting to Self Service...');
  	window.location = selfServiceFrameLink;
  }
 
@@ -172,11 +186,79 @@ function main()
  *
  */
 
-function cleanUI()
+function freshUI()
 {
 
 }
 
+/*
+ *	Clean up an existing CF Page
+ *
+ */
+
+var breadcrumbs = "EOPP_SCBREADCRUMBSECTION";
+var titleSectionsClass = "EOPP_SCPAGETITLESECTION";
+
+function cleanPage()
+{
+	/*	Kill all breadcrumbs */
+	var crumbs = document.getElementsByClassName(breadcrumbs);
+
+	for (var i = crumbs.length - 1; i >= 0; i--) {
+
+		removeNode(crumbs[i]);
+	};
+
+	/* Edit the title */
+
+	var titles = document.getElementsByClassName(titleSectionsClass);
+
+	for (var i = titles.length - 1; i >= 0; i--) {
+		if(containsSubstring(titles[i].innerText, "Self Service") || containsSubstring(titles[i].innerText, "CUNY First"))
+		{
+			titles[i].innerText = "Students First";
+		}
+	};
+}
+
+/* 
+ *	Main Menu
+ *
+ *	Render a main menu for self service subpages.
+ *
+ */
+
+function mainMenu()
+{
+	var page = document.getElementsByClassName("PSPAGE")[0];	//	The body tag was stupidly named as such
+
+	var mainMenu = document.createElement("div");
+	mainMenu.setAttribute("id", "students-first-menu");
+
+	var mainMenuButton = link(selfServiceFrameLink, "Main Menu");
+	mainMenuButton.setAttribute("id", "students-first-main-menu-link");
+	mainMenuButton.setAttribute("class", "students-first-link");	
+	mainMenu.appendChild(mainMenuButton);
+
+	var logOutButton = link(logoutLink, "Log Out");
+	logOutButton.setAttribute("id", "students-first-logout-link");
+	logOutButton.setAttribute("class", "students-first-link");	
+	mainMenu.appendChild(logOutButton);
+
+	page.insertBefore(mainMenu, page.firstChild);
+}
+
+function installCSS()
+{
+	var stylesheet = document.createElement('link');
+	stylesheet.setAttribute('rel', 'stylesheet');	
+	stylesheet.setAttribute('href', stylesheetURL);	
+	stylesheet.setAttribute('type', 'text/css');	
+
+	var domainSetter = document.getElementsByTagName("script")[0];
+
+	document.getElementsByTagName('head')[0].insertBefore(stylesheet, domainSetter);
+}
 /*
  *	Login Page
  *
@@ -194,12 +276,32 @@ function cleanUI()
 function mainMenuLoginPage()
 {
 
+	/* Build out the nav UI Menu. */
+
 	var menu = document.getElementById("mainnav");
 
-	//	Clear the menu	
+	//	Clear the menu, and replace it with the new menu
 	menu.innerHTML = "";
-
 	menu.appendChild(navList());
+
+	/* Rip out the form from the surrounding text */
+	var form = document.getElementsByTagName("form");
+
+	var formElement = null;
+
+	for (var i = form.length - 1; i >= 0; i--) {
+		if(form[i].getAttribute("name") == "loginform")
+		{
+			formElement = form[i];
+			break;
+		}
+	};
+
+	if (formElement != null) {
+		var wrapper = document.getElementById("content");
+		wrapper.parentNode.appendChild(formElement);
+		removeNode(wrapper);
+	};
 }
 
 /* Login Utilities */
@@ -210,8 +312,12 @@ function navList()
 
 	//	Move the "password links to the top"
 	var claimLink = listNodeWithLink("https://impweb.cuny.edu/selfservice/activation/start.action", "Get a Username");
+	var forgotLink = listNodeWithLink("https://impweb.cuny.edu/selfservice/activation/start.action", "I Forgot My Password");
+	var changeLink = listNodeWithLink("https://impweb.cuny.edu/selfservice/changepwd/start.action", "I Want to Change My Password");	
 	var aboutLink = listNodeWithLink("https://github.com/MosheBerman/StudentsFirst", "About Students First");
 
+	list.appendChild(forgotLink);
+	list.appendChild(changeLink);	
 	list.appendChild(claimLink);
 	list.appendChild(aboutLink);
 	
@@ -232,7 +338,7 @@ function navList()
  *
  */
 
- // TODO: Implement this
+ // TODO: Implement this - for now, redirect
 
 /*
  *	General Utility functions
@@ -241,12 +347,34 @@ function navList()
  *  throughout the Students First userscript.
  */
 
+/*
+ *	DOM Utilities
+ */
+
+//	Removes a node from the DOM
+ function removeNode(node)
+ {
+ 	node.parentNode.removeChild(node);
+ }
+
+//	Create a link and wrap it in a list element
 function listNodeWithLink(url, content)
 {
 	
 	// Create a list node
 	var listItem = document.createElement("li");
 
+	var node = link(url, content);
+
+	//	Wire the anchor to the list item
+	listItem.appendChild(node);
+	
+	return listItem;
+}
+
+//	Create a link, an "a tag"
+function link(url, content)
+{
 	//	Create an anchor node
 	var node = document.createElement("a");
 	node.setAttribute("href", url);
@@ -255,10 +383,7 @@ function listNodeWithLink(url, content)
 	var text = document.createTextNode(content);
 	node.appendChild(text);
 
-	//	Wire the anchor to the list item
-	listItem.appendChild(node);
-	
-	return listItem;
+	return node;
 }
 
 /*
@@ -285,6 +410,15 @@ function supportsLocalStorage() {
     }
     return false;
 }
+
+/*
+ *
+ */
+
+ function containsSubstring(haystack, needle)
+ {
+ 	return haystack.search(needle) >= 0;
+ }
 
 /*
  *	URL Utilities
