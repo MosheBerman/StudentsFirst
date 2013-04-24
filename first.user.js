@@ -4,7 +4,7 @@
 //
 // @namespace	http://mosheberman.com
 // @description   Implements a cleaner interface over CUNY First, and fixes some UI issues.
-// @version 0.4
+// @version 0.5
 //
 // @include      https://*cunyfirst.cuny.edu/*
 // @include      http://*cunyfirst.cuny.edu/*
@@ -16,7 +16,8 @@
 
 /* -------- Configurable Global variables ----------- */
 
-var stylesheetURL = "http://raw.github.com/MosheBerman/StudentsFirst/master/css/sf.css";
+// var stylesheetURL = "http://raw.github.com/MosheBerman/StudentsFirst/master/css/sf.css";
+// var stylesheetURL = "http://MosheBerman.com/sf.css";
 var petitionLink = "http://www.change.org/petitions/city-university-of-new-york-fix-cuny-first";
 
 /* -------- Scraping related Global variables ----------- */
@@ -127,12 +128,6 @@ function main()
 
 	/* Do some global cleanup first...*/
 
-	//	Install a fresh stylesheet
-	installCSS();
-
-	//	Clean up breadcrumbs and titles...
-	cleanPage();
-
 	//	Detect the current page and take action! Action, I say!
 	var currentPage = getCurrentPage();
 
@@ -165,6 +160,13 @@ function main()
 		//Unknown - General clean up	
 		mainMenu();
 	}
+
+//	Install a fresh stylesheet
+	// installCSS();
+
+	//	Clean up breadcrumbs and titles...
+	cleanPage();	
+
 }
 
 /*
@@ -250,14 +252,26 @@ function mainMenu()
 
 function installCSS()
 {
-	var stylesheet = document.createElement('link');
-	stylesheet.setAttribute('rel', 'stylesheet');	
-	stylesheet.setAttribute('href', stylesheetURL);	
-	stylesheet.setAttribute('type', 'text/css');	
+
+	var head = document.getElementsByTagName('head')[0];
+
+	var stylesheet = css();
 
 	var domainSetter = document.getElementsByTagName("script")[0];
 
-	document.getElementsByTagName('head')[0].insertBefore(stylesheet, domainSetter);
+	head.insertBefore(stylesheet, domainSetter);
+	
+}
+
+function css()
+{
+var cssNode = document.createElement('link');
+cssNode.type = 'text/plain';
+cssNode.rel = 'stylesheet';
+cssNode.href = stylesheetURL;
+cssNode.media = 'screen';
+cssNode.title = 'dynamicLoadedSheet';
+	return cssNode;
 }
 /*
  *	Login Page
