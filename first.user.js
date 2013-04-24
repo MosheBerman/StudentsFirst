@@ -4,24 +4,118 @@
 //
 // @namespace	http://mosheberman.com
 // @description   Implements a cleaner interface over CUNY First, and fixes some UI issues.
-// @version 0.02
+// @version 0.4
 //
 // @include      https://*cunyfirst.cuny.edu/*
 // @include      http://*cunyfirst.cuny.edu/*
+// @include		 https://impweb.cuny.edu/selfservice/activation/start.action
 //
 // @author Moshe Berman
 //
 // ==/UserScript==
 
-/* Let's go! */
+/* 
+ *	School selection
+ *
+ *	This code tells us what school we're working with.
+ *	This is helpful for things like hiding or showing 
+ *	inactive tabs.
+ *
+ */
 
-main();
+var schoolNames = ["Baruch",
+"Borough of Manhattan Community College",
+"Brooklyn College",
+"City College of New York",
+"CUNY Graduate Center",
+"CUNY Graduate School of Journalism",
+"CUNY School of Professional Studies",
+"CUNY School of Law",
+"College of Staten Island",
+"Hostos Community College",
+"Hunter College",
+"John Jay College of Criminal Justice",
+"Kingsborough Community College",
+"LaGuardia Community College",
+"Lehman College",
+"Macaulay Honors College at CUNY",
+"Medgar Evers College",
+"New York City College of Technology",
+"The New Community College at CUNY",
+"Queens College",
+"Queensborough Community College",
+"CUNY School of Public Health",
+"College of Staten Island",
+"York College"
+];
 
-/* Global variables, yuck! */
+function currentSchool()
+{
+	// For now, stick to BC
+	return schoolNames[2];
+}
 
-// A link to the control panel...
+/* 
+ *	Page selection
+ *
+ *	This code tells us what page we're on.
+ *	This is helpful for page-specific customizations.
+ *
+ */
+
+/*
+ *	IMPORTANT: This drives a lot of the logic flow.
+ * 	An array of pages we know about...
+ */
+
+var pages = ["unknown", "default", "self service", "login", "claim"];
+
+// Slugs and stuff to help find pages
+var claimSlug = "selfservice/activation/start.action";	//	Sign Up page
+var loginSlug = "Portal_Login";	//	Log in page
+var defaultPageParam = "tab=DEFAULT";	//	Default page
+var selfServiceParam = "pt_fname=CO_EMPLOYEE_SELF_SERVICE";	//	The self service page
+
+/* This function attempts to determine the current page based on the URL. */
+function getCurrentPage ()
+{
+
+	var location = baseURL(window.location.toString());
+	var params = URLParams(window.location.toString());
+
+	// If the defaultPageSlug is in the array, we're in the default page	
+	if(contains(params, defaultPageParam))
+	{
+		return pages[1]		//	Default tab
+	}
+	
+	//	If the URL params contain the self service params, we're looking at the home page 
+	else if(contains(params, selfServiceParam))
+	{
+		return pages[2];
+	}
+
+	//	If we've got the login slug, so we're at the log in page
+	else if(location.search(loginSlug))
+	{
+		return pages[3];
+	}
+
+	//	If the URL contains the claim page slug, we're in the claim your ID page
+	else if(location.search(claimSlug) >= 0)
+	{
+		return pages[4];	//	Claim page
+	}
+
+
+	return pages[0];
+}
+
+// A link to the control panel page - it has an iFrame which we want to load as *the* page.
 var selfServiceLink = "https://hrsa.cunyfirst.cuny.edu/psp/cnyhcprd/EMPLOYEE/HRMS/s/WEBLIB_PTPP_SC.HOMEPAGE.FieldFormula.IScript_AppHP?pt_fname=CO_EMPLOYEE_SELF_SERVICE";
-var selfServiceFrameLink = "https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/EMPLOYEE/HRMS/s/WEBLIB_PTPP_SC.HOMEPAGE.FieldFormula.IScript_AppHP?pt_fname=CO_EMPLOYEE_SELF_SERVICE&PortalActualURL=https%3a%2f%2fhrsa.cunyfirst.cuny.edu%2fpsc%2fcnyhcprd%2fEMPLOYEE%2fHRMS%2fs%2fWEBLIB_PTPP_SC.HOMEPAGE.FieldFormula.IScript_AppHP&PortalContentURL=https%3a%2f%2fhrsa.cunyfirst.cuny.edu%2fpsc%2fcnyhcprd%2fEMPLOYEE%2fHRMS%2fs%2fWEBLIB_PTPP_SC.HOMEPAGE.FieldFormula.IScript_AppHP&PortalContentProvider=HRMS&PortalCRefLabel=Base%20Navigation%20Page&PortalRegistryName=EMPLOYEE&PortalServletURI=https%3a%2f%2fhrsa.cunyfirst.cuny.edu%2fpsp%2fcnyhcprd%2f&PortalURI=https%3a%2f%2fhrsa.cunyfirst.cuny.edu%2fpsc%2fcnyhcprd%2f&PortalHostNode=HRMS&NoCrumbs=yes&PortalCacheContent=true&PSCache-Control=max-age%3d360%2crole&PortalKeyStruct=yes"
+
+//	This is the page we actually want to see when we log in/
+var selfServiceFrameLink = "https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/EMPLOYEE/HRMS/s/WEBLIB_PTPP_SC.HOMEPAGE.FieldFormula.IScript_AppHP?pt_fname=CO_EMPLOYEE_SELF_SERVICE&PortalActualURL=https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/EMPLOYEE/HRMS/s/WEBLIB_PTPP_SC.HOMEPAGE.FieldFormula.IScript_AppHP&PortalContentURL=https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/EMPLOYEE/HRMS/s/WEBLIB_PTPP_SC.HOMEPAGE.FieldFormula.IScript_AppHP&PortalContentProvider=HRMS&PortalCRefLabel=Base%20Navigation%20Page&PortalRegistryName=EMPLOYEE&PortalServletURI=https://hrsa.cunyfirst.cuny.edu/psp/cnyhcprd/&PortalURI=https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/&PortalHostNode=HRMS&NoCrumbs=yes&PortalCacheContent=true&PSCache-Control=max-age%3d360%2crole&PortalKeyStruct=yes"
 
 /* Entry point of the script, called above. */
 
@@ -29,10 +123,54 @@ function main()
 {
 	console.log("Students First is running. I'm so sorry we have to do this...");
 	
-	mainMenuLoginPage();
+	var currentPage = getCurrentPage();
+
+	console.log("[SF] Page Key:" currentPage);
+
+	if(currentPage == pages[1])
+	{
+		//	default - go to self service
+		console.log('Default, redirecting....');
+		goToSelfService();
+
+	}
+	else if(currentPage == pages[2])
+	{
+		//	self service
+	}
+	else if(currentPage == pages[3])
+	{
+
+	}
+	else if(currentPage == pages[4])
+	{
+
+	}
+	else
+	{
+		//Unknown
+	}
 }
 
-/* Clean up the main UI */
+/*
+ *
+ *	Jump to the self service page
+ *
+ */
+
+ function goToSelfService()
+ {
+ 	console.log('Redirecting to Self Service...');
+ 	window.location = selfServiceFrameLink;
+ }
+
+/*
+ *	Build a skeleton UI to work with.
+ *
+ *	We'll load page specific stuff 
+ *	into here as necessary.
+ *
+ */
 
 function cleanUI()
 {
@@ -40,7 +178,7 @@ function cleanUI()
 }
 
 /*
- *	SECTION: Login Page
+ *	Login Page
  *
  *	This code modifies the login page so that 
  *  it makes a little more sense. 
@@ -81,7 +219,7 @@ function navList()
 }
 
 /*
- *	SECTION: Landing Page
+ *	Landing Page
  *
  *	This code modifies the landing page so that 
  *  it makes a little more sense. 
@@ -94,8 +232,10 @@ function navList()
  *
  */
 
+ // TODO: Implement this
+
 /*
- *	SECTION: General Utility functions
+ *	General Utility functions
  *
  *	These miscellaneous functions are used
  *  throughout the Students First userscript.
@@ -120,3 +260,51 @@ function listNodeWithLink(url, content)
 	
 	return listItem;
 }
+
+/*
+ *	Test for local storage support - in case we want to save settings
+ */
+
+function supportsLocalStorage() {
+  try {
+    return 'localStorage' in window && window['localStorage'] !== null;
+  } catch (e) {
+    return false;
+  }
+}
+
+/*
+ *	Checks for a value in an array
+ */
+
+ function contains(a, obj) {
+    for (var i = 0; i < a.length; i++) {
+        if (a[i] === obj) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/*
+ *	URL Utilities
+ */ 
+
+ function baseURL(url)
+ {
+ 	var split = url.split("?");
+ 	return split[0];
+ }
+
+ function URLParams(url)
+ {
+	var paramsAndAndURL = url.split("?");
+	var paramString = paramsAndAndURL[1] ? paramsAndAndURL[1] : "";
+	var paramsArray = paramString.split("&");
+
+	return paramsArray;
+ }
+
+ /* Let's go! */
+
+main();
