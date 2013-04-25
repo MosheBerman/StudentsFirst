@@ -3,23 +3,43 @@
 body
 {
 	text-align: center;
+	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/linen.png");
+	background-repeat: repeat;
 }
 
-/* Login/logout/signup page */
-#container #headerhome
+/* ------------------ Login menu ------------------- */
+
+#students-first-login-wrapper
 {
-	background-image: none;
-
+	margin: auto;
+	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/login/background.png");
+	background-repeat: no-repeat;
 }
 
-#container #mainnav
+#students-first-login-wrapper #students-first-login-title
 {
-	background-image: none;	
-	background-image: !important url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/header.png");	
+	color: #fff;
+	text-shadow: 2px 2px 2px #000;
 }
 
-/* Custom menu, once logged in */
 
+
+#students-first-login-wrapper .students-first-input-text
+{
+	display: block;
+	height: 90px;
+	width: 660px;
+	background-color: none;
+	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/login/input.png");
+	background-repeat: no-repeat;
+}
+
+#students-first-login-wrapper .students-first-input-submit
+{
+
+}
+
+/* ------------ Custom menu, once logged in. --------------- */
 #students-first-menu
 {
 	display: block;
