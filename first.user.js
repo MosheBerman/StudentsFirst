@@ -359,9 +359,15 @@ function loginForm()
 	formNode.setAttribute("action", "/bookmark/hsitas.html");
 	formNode.setAttribute("method", "post");
 
-	formNode.appendChild(input("login", "login", "username students-first-input-text"));
-	formNode.appendChild(input("password", "password", "password students-first-input-text", "password"));	
-	formNode.appendChild(input("submit", "submit", "students-first-input-submit", "submit"));
+	var nameInput = input("login", "login", "username students-first-input-text");
+	nameInput.setAttribute("placeholder", "Username");
+
+	var passwordInput = input("password", "password", "password students-first-input-text", "password");
+	passwordInput.setAttribute("placeholder", "Password");
+
+	formNode.appendChild(nameInput);
+	formNode.appendChild(passwordInput);	
+	formNode.appendChild(input("submit students-first-input-submit", "submit", "", "submit"));
 
 	return formNode;
 }

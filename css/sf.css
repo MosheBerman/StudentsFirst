@@ -68,11 +68,12 @@ body
 	
 }
 
-#students-first-login-wrapper .students-first-input-submit
+#students-first-login-wrapper #students-first-input-submit
 {
 	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/login/submit.png");
 	background-size: 160px 130px;
-
+	height: 130px;
+	width: 160px;
 }
 
 #students-first-login-wrapper ul
@@ -81,17 +82,17 @@ body
 	width: 100%;
 	margin: 0;
 	padding: 0;
+	text-align: center;
 }
 
 #students-first-login-wrapper ul li 
 {
-	float: left;
-	margin: 0 5px;
+	margin: 0 10px;
 }
 
 #students-first-login-wrapper ul li a
 {
-	color: #fff;
+	color: #ccc;
 	text-decoration: none;
 	float: left;
 }
@@ -100,7 +101,6 @@ body
 {
 	color: #fff;
 	background-color: transparent !important;
-	text-decoration: underline;
 }
 /* ------------ Custom menu, once logged in. --------------- */
 #students-first-menu
