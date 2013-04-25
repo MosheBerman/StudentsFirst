@@ -3,6 +3,7 @@
 	height: 123px;
 	width: 100%;
 	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/header.png");
+	background-repeat: no-repeat;
 }
 
 #students-first-menu a
@@ -10,6 +11,8 @@
 	text-decoration: none;
 	margin: 5px 10px;
 	color: #ccc;
+	float: right;
+	margin-bottom: 5px;
 }
 
 #students-first-menu a:hover
