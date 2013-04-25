@@ -29,7 +29,7 @@ body
 #students-first-login-wrapper
 {
 
-	margin: auto auto;
+	margin: 20px auto;
 	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/login/background.png");
 	background-repeat: no-repeat;
 	height: 400px;
