@@ -32,14 +32,18 @@ td a img
 td a
 {
 	margin: 2px !important;
-	font-size:1.2em !important;
 	text-decoration: none !important;
-	color: #004f85 !important;
+	color: #004f85 !important;	
 }
 
 td a:hover
 {
 	color: #0080c3 !important;
+}
+
+.EOPP_SCADDITIONALTEXT
+{
+	display: none;
 }
 
 /* ------------------ Login menu ------------------- */
