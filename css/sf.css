@@ -95,6 +95,7 @@ body
 	color: #ccc;
 	text-decoration: none;
 	float: left;
+	margin: 0 10px;
 }
 
 #students-first-login-wrapper ul li a:hover
