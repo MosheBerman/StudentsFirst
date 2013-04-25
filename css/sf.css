@@ -32,7 +32,7 @@ body
 	float: left;
 	clear: both;
 	height: 100px;
-	margin: 20px 0px;
+	margin: 20px 20px 10px 0px;
 }
 
 #students-first-login-wrapper #students-first-login-title strong
@@ -51,13 +51,13 @@ body
 #students-first-login-wrapper .students-first-input-text
 {
 	display: block;
-	height: 30px;
-	width: 220px;
-	margin: 5px;
+	height: 60px;
+	width: 440px;
+	margin: 10px;
 	background-color: transparent;
 	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/login/input.png");
 	background-repeat: no-repeat;
-	background-size: 220px 30px;
+	background-size: 440px 40px;
 	border: none;
 }
 
@@ -66,6 +66,9 @@ body
 	padding: 0 10px !important;
 	font-family: Verdana, Helvetica, sans-serif;
 	color: #7b7b7b;
+	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/login/submit.png");
+	background-size: 160px 130px;
+
 }
 
 #students-first-login-wrapper ul
@@ -84,7 +87,7 @@ body
 
 #students-first-login-wrapper ul li a
 {
-	color: #c0c0c0;
+	color: #fff;
 	text-decoration: none;
 	float: left;
 }
@@ -93,6 +96,7 @@ body
 {
 	color: #fff;
 	background-color: transparent !important;
+	text-decoration: underline;
 }
 /* ------------ Custom menu, once logged in. --------------- */
 #students-first-menu
