@@ -18,6 +18,11 @@ body
 	margin: auto;
 }
 
+.PSPAGECONTAINER
+{
+	width: 952 !important;
+}
+
 /* ------------------ Login menu ------------------- */
 
 #students-first-login-wrapper
