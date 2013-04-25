@@ -12,7 +12,7 @@ body
 
 /* ---- CUNY FIRST ----- */
 
-#PSPAGECONTAINER
+#PSPAGECONTAINER, #PAGECONTAINER
 {
 	width: 960px;
 	margin: auto;
