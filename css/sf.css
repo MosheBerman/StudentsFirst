@@ -1,8 +1,8 @@
 #students-first-menu
 {
-	height: 44px;
+	height: 123px;
 	width: 100%;
-	background-color: #22f;
+	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/header.png");
 }
 
 #students-first-menu a
