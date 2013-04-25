@@ -23,20 +23,22 @@ body
 	padding:15px;
 }
 
-#students-first-login-wrapper #students-first-login-title strong
-{
-	font-weight: bold;
-	font-size: 22px;
-}
-
 #students-first-login-wrapper #students-first-login-title
 {
 	color: #fff !important;
 	text-shadow: 0px 1px 1px #000;
-	font-size: 18px;
+	font-size: 44px;
 	font-weight: normal;
 	float: left;
 	clear: both;
+	height: 100px;
+	margin: 20px 0px;
+}
+
+#students-first-login-wrapper #students-first-login-title strong
+{
+	font-weight: bold;
+	font-size: 44px;
 }
 
 #students-first-login-wrapper form
@@ -70,11 +72,14 @@ body
 {
 	list-style-type: none;
 	width: 100%;
+	margin: 0;
+	padding: 0;
 }
 
 #students-first-login-wrapper ul li 
 {
 	float: left;
+	margin: 0 5px;
 }
 
 #students-first-login-wrapper ul li a
