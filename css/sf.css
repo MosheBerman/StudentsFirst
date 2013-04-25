@@ -19,6 +19,7 @@ body
 	margin: auto 5px 10px 5px;
 	color: #ccc;
 	float: right;
+	bottom: 5px;
 }
 
 #students-first-menu a:hover
