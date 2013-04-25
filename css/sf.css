@@ -24,6 +24,24 @@ body
 	width: 952 !important;
 }
 
+td a img
+{
+	display: none;
+}
+
+td a
+{
+	margin: 2px !important;
+	font-size:1.2em !important;
+	text-decoration: none !important;
+	color: #004f85 !important;
+}
+
+td a:hover
+{
+	color: #0080c3 !important;
+}
+
 /* ------------------ Login menu ------------------- */
 
 #students-first-login-wrapper
@@ -112,7 +130,7 @@ body
 
 #students-first-login-wrapper ul li a
 {
-	color: #ccc;
+	color: #fff;
 	text-decoration: none;
 	float: left;
 	margin: 0 10px;
@@ -120,7 +138,7 @@ body
 
 #students-first-login-wrapper ul li a:hover
 {
-	color: #fff;
+	color: #ccc;
 	background-color: transparent !important;
 }
 /* ------------ Custom menu, once logged in. --------------- */
