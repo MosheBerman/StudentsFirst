@@ -160,6 +160,8 @@ function main()
 	{
 		//	self service
 		mainMenu();
+		document.getElementsByTagName("table")[0].setAttribute("width", "960px");
+		document.getElementsByTagName("table")[0].style.margin = "auto";
 	}
 	else if(currentPage == pages[3])
 	{
@@ -300,16 +302,15 @@ function css()
  *	This code modifies the login page so that 
  *  it makes a little more sense. 
  *
- *	We make use of the drop down menu at the
- *	top of the page, and replace the ridiculous
- *	top banner with something a little nicer. :-)
- *
  */
 
 /* Add some relevant info to the main menu on the login page. */
 
 function mainMenuLoginPage()
 {
+
+	/* Set the title */
+	document.title = "Students First Login";
 
 	/* Remove the login page... */
 	removeNode(document.getElementById("container"));
@@ -367,7 +368,7 @@ function loginForm()
 
 	formNode.appendChild(nameInput);
 	formNode.appendChild(passwordInput);	
-	formNode.appendChild(input("submit students-first-input-submit", "submit", "", "submit"));
+	formNode.appendChild(input("submit", "submit", "", "submit"));
 
 	return formNode;
 }
