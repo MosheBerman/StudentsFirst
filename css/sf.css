@@ -32,7 +32,7 @@ body
 	float: left;
 	clear: both;
 	height: 100px;
-	margin: 20px 20px 10px 0px;
+	margin: 20px 0px 10px 20px;
 }
 
 #students-first-login-wrapper #students-first-login-title strong
@@ -53,19 +53,19 @@ body
 	display: block;
 	height: 60px;
 	width: 440px;
-	margin: 10px;
+	margin: 5px;
 	background-color: transparent;
 	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/login/input.png");
 	background-repeat: no-repeat;
-	background-size: 440px 40px;
+	background-size: 440px 60px;
 	border: none;
+	padding: 0 10px !important;
+	font-family: Verdana, Helvetica, sans-serif;
+	color: #7b7b7b;
 }
 
 #students-first-login-wrapper .students-first-input-submit
 {
-	padding: 0 10px !important;
-	font-family: Verdana, Helvetica, sans-serif;
-	color: #7b7b7b;
 	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/login/submit.png");
 	background-size: 160px 130px;
 
