@@ -7,6 +7,7 @@ body
 	background-repeat: repeat;
 	background-color: #444;
 	color: #fff;
+	font-family: 'Verdena', Helvetica, sans-serif;
 }
 
 /* ------------------ Login menu ------------------- */
@@ -24,7 +25,7 @@ body
 
 #students-first-login-wrapper #students-first-login-title
 {
-	color: #fff;
+	color: #fff !important;
 	text-shadow: 2px 2px 2px #000;
 }
 
@@ -36,9 +37,11 @@ body
 	height: 30px;
 	width: 220px;
 	margin: 5px;
-	background-color: none;
+	background-color: transparent;
 	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/login/input.png");
 	background-repeat: no-repeat;
+	background-size: 220px 30px;
+	border: none;
 }
 
 #students-first-login-wrapper .students-first-input-submit
