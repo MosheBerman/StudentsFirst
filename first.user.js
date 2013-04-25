@@ -359,7 +359,6 @@ function loginForm()
 	formNode.setAttribute("action", "/bookmark/hsitas.html");
 	formNode.setAttribute("method", "post");
 
-	// formNode.appendChild(label("username", "username"));
 	formNode.appendChild(input("login", "login", "username students-first-input-text"));
 	formNode.appendChild(input("password", "password", "password students-first-input-text", "password"));	
 	formNode.appendChild(input("submit", "submit", "students-first-input-submit", "submit"));
@@ -411,8 +410,8 @@ function navList()
 	list.appendChild(menuForgotURL);
 	list.appendChild(menuChangeURL);	
 	list.appendChild(menuClaimURL);
-	list.appendChild(menuAboutURL);
-	list.appendChild(menuPetitionURL);
+	// list.appendChild(menuAboutURL);
+	// list.appendChild(menuPetitionURL);
 	
 	return list;	
 }
