@@ -336,9 +336,17 @@ function mainMenuLoginPage()
 /* Creates a title for the login. */
 function loginTitle()
 {
+
+	var boldTitleText = document.createTextNode("Students First.");
+	var logInText = document.createTextNode(" Please log in.");
+	var boldNode = document.createElement("strong");
+
+	boldNode.appendChild(boldTitleText);
+
 	var title = document.createElement("h3");
-	title.setAttribute("innerHTML", "<strong>Students First.</strong> Please log in.");
-	title.setAttribute("class", "students-first-login-title");
+	title.appendChild(boldNode);
+	title.appendChild(logInText);
+	title.setAttribute("id", "students-first-login-title");
 	return title;
 }
 
@@ -353,7 +361,7 @@ function loginForm()
 
 	// formNode.appendChild(label("username", "username"));
 	formNode.appendChild(input("login", "login", "username students-first-input-text"));
-	formNode.appendChild(input("password", "password", "password students-first-input-text"", "password"));	
+	formNode.appendChild(input("password", "password", "password students-first-input-text", "password"));	
 	formNode.appendChild(input("submit", "submit", "students-first-input-submit", "submit"));
 
 	return formNode;
