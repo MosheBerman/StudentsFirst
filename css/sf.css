@@ -11,9 +11,12 @@ body
 
 #students-first-login-wrapper
 {
-	margin: auto;
+
+	margin: auto auto;
 	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/login/background.png");
 	background-repeat: no-repeat;
+	height: 400px;
+	width:960px;
 }
 
 #students-first-login-wrapper #students-first-login-title

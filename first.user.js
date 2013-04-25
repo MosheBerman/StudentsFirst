@@ -21,17 +21,26 @@ var petitionURL = "http://www.change.org/petitions/city-university-of-new-york-f
 
 /* -------- Scraping related Global variables ----------- */
 
-var pages = ["unknown", "default", "self service", "login", "claim"];
+var pages = [	"unknown",
+ 				"default",
+ 				"self service",
+ 				"login",
+ 				"claim",
+ 				"logged out"];
 
 // Slugs and stuff to help find pages
 var claimSlug = "selfservice/activation/start.action";	//	Sign Up page
 var loginSlug = "Portal_Login1.html";	//	Log in page
+var loggedOutSlug= "oam/logout.html";	//	Log out page
+
 var defaultPageParam = "tab=DEFAULT";	//	Default page
 var selfServiceParam = "pt_fname=CO_EMPLOYEE_SELF_SERVICE";	//	The self service page
 
 //A link to the control panel page - it has an iFrame which we want to load as *the* page.
 var selfServiceFrameURL = "https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/EMPLOYEE/HRMS/s/WEBLIB_PTPP_SC.HOMEPAGE.FieldFormula.IScript_AppHP?pt_fname=CO_EMPLOYEE_SELF_SERVICE&PortalActualURL=https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/EMPLOYEE/HRMS/s/WEBLIB_PTPP_SC.HOMEPAGE.FieldFormula.IScript_AppHP&PortalContentURL=https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/EMPLOYEE/HRMS/s/WEBLIB_PTPP_SC.HOMEPAGE.FieldFormula.IScript_AppHP&PortalContentProvider=HRMS&PortalCRefLabel=Base%20Navigation%20Page&PortalRegistryName=EMPLOYEE&PortalServletURI=https://hrsa.cunyfirst.cuny.edu/psp/cnyhcprd/&PortalURI=https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/&PortalHostNode=HRMS&NoCrumbs=yes&PortalCacheContent=true&PSCache-Control=max-age%3d360%2crole&PortalKeyStruct=yes"
+var loginURL = "https://hrsa.cunyfirst.cuny.edu/oam/Portal_Login1.html";
 var logoutURL = "https://hrsa.cunyfirst.cuny.edu/psp/cnyhcprd/EMPLOYEE/HRMS/?cmd=logout";
+
 
 
 var schoolNames = ["Baruch College",
@@ -111,6 +120,11 @@ function getCurrentPage ()
 	{
 		return pages[4];	//	Claim page
 	}
+	//	If the url contains a logged out slug, redirect home
+	else if(containsSubstring(location, loggedOutSlug))
+	{
+		goToLogin();
+	}
 
 
 	return pages[0];
@@ -126,7 +140,7 @@ function main()
 
 	//	Break out of those frames!
 	if (top.location!= self.location) {
-			top.location = self.location.href
+		top.location = self.location.href
 	}
 
 	//	Detect the current page and take action! Action, I say!
@@ -158,7 +172,6 @@ function main()
 	}
 	else
 	{
-		
 		mainMenu();
 	}
 
@@ -167,18 +180,27 @@ function main()
 
 	//	Clean up breadcrumbs and titles...
 	cleanPage();	
+	
+	retina();
 
 }
 
 /*
- *
  *	Jump to the self service page
- *
  */
 
  function goToSelfService()
  {
  	window.location = selfServiceFrameURL;
+ }
+
+ /*
+ *	Jump to the login page
+ */
+
+ function goToLogin()
+ {
+ 	window.location = loginURL;
  }
 
 /*
@@ -289,34 +311,80 @@ function css()
 function mainMenuLoginPage()
 {
 
-	/* Build out the nav UI Menu. */
+	/* Remove the login page... */
+	removeNode(document.getElementById("container"));
 
-	var mainnav =  document.getElementById("mainnav");
-	var menu = document.getElementById("menu");
+	/* Create a navigation list. */
+	var nav = navList();
 
-	//	Clear the menu, and replace it with the new menu
-	mainnav.innerHTML = "";
-	menu.innerHTML = "";
-	menu.appendChild(navList());
+	/* Title */
+	var title = loginTitle();
 
-	/* Rip out the form from the surrounding text */
-	var form = document.getElementsByTagName("form");
+	/* Create a login view. */
+	var login = loginForm();
 
-	var formElement = null;
+	/* Create a wrapper... */
+	var wrapper = loginWrapper();
 
-	for (var i = form.length - 1; i >= 0; i--) {
-		if(form[i].getAttribute("name") == "loginform")
-		{
-			formElement = form[i];
-			break;
-		}
-	};
+	/* Wire it all up */
+	document.body.appendChild(wrapper);
+	wrapper.appendChild(title);
+	wrapper.appendChild(login);
+	wrapper.appendChild(nav);
+}
 
-	if (formElement != null) {
-		var wrapper = document.getElementById("content");
-		wrapper.parentNode.appendChild(formElement);
-		removeNode(wrapper);
-	};
+/* Creates a title for the login. */
+function loginTitle()
+{
+	var title = document.createElement("h3");
+	title.setAttribute("innerHTML", "<strong>Students First.</strong> Please log in.");
+	title.setAttribute("class", "students-first-login-title");
+	return title;
+}
+
+/* Creates the login form proper */
+function loginForm()
+{
+	var formNode = document.createElement("form");
+	formNode.setAttribute("name", "loginform");	
+	formNode.setAttribute("id", "students-first-login-form");
+	formNode.setAttribute("action", "/bookmark/hsitas.html");
+	formNode.setAttribute("method", "post");
+
+	// formNode.appendChild(label("username", "username"));
+	formNode.appendChild(input("login", "login", "username students-first-input-text"));
+	formNode.appendChild(input("password", "password", "password students-first-input-text"", "password"));	
+	formNode.appendChild(input("submit", "submit", "students-first-input-submit", "submit"));
+
+	return formNode;
+}
+
+function loginWrapper()
+{
+	var wrapperNode = document.createElement("div");
+	wrapperNode.setAttribute("id", "students-first-login-wrapper");
+	return wrapperNode;
+}
+
+function label(forAttr, classAttr)
+{
+	var labelNode = document.createElement("label");
+	labelNode.setAttribute("for", forAttr);
+	labelNode.setAttribute("class", classAttr);
+	return labelNode;
+}
+
+function input(idAttr, nameAttr, classAttr, type)
+{
+
+	type = typeof type != 'undefined' ? type : "text";
+
+	var inputNode = document.createElement("input");
+	inputNode.setAttribute("id", idAttr);
+	inputNode.setAttribute("name", nameAttr);
+	inputNode.setAttribute("type", type);
+	inputNode.setAttribute("class", classAttr);
+	return inputNode;
 }
 
 /* Login Utilities */
@@ -326,17 +394,17 @@ function navList()
 	var list = document.createElement("ul");
 
 	//	Move the "password links to the top"
-	var claimURL = listNodeWithURL("https://impweb.cuny.edu/selfservice/activation/start.action", "Get a Username");
-	var forgotURL = listNodeWithURL("https://impweb.cuny.edu/selfservice/activation/start.action", "I Forgot My Password");
-	var changeURL = listNodeWithURL("https://impweb.cuny.edu/selfservice/changepwd/start.action", "I Want to Change My Password");	
-	var petitionURL = listNodeWithURL(petitionURL, "Tell CUNY to Put Students First!");
-	var aboutURL = listNodeWithURL("https://github.com/MosheBerman/StudentsFirst", "About Students First");
+	var menuClaimURL = listNodeWithURL("https://impweb.cuny.edu/selfservice/activation/start.action", "Get a Username");
+	var menuForgotURL = listNodeWithURL("https://impweb.cuny.edu/selfservice/activation/start.action", "I Forgot My Password");
+	var menuChangeURL = listNodeWithURL("https://impweb.cuny.edu/selfservice/changepwd/start.action", "I Want to Change My Password");	
+	var menuPetitionURL = listNodeWithURL(petitionURL, "Tell CUNY to Put Students First!");
+	var menuAboutURL = listNodeWithURL("https://github.com/MosheBerman/StudentsFirst", "About Students First");
 
-	list.appendChild(forgotURL);
-	list.appendChild(changeURL);	
-	list.appendChild(claimURL);
-	list.appendChild(aboutURL);
-	list.appendChild(petitionURL);
+	list.appendChild(menuForgotURL);
+	list.appendChild(menuChangeURL);	
+	list.appendChild(menuClaimURL);
+	list.appendChild(menuAboutURL);
+	list.appendChild(menuPetitionURL);
 	
 	return list;	
 }
@@ -455,6 +523,15 @@ function supportsLocalStorage() {
 
 	return paramsArray;
  }
+
+/* Retina-izer from retinajs.com */
+
+function retina()
+{
+// retina.js, a high-resolution image swapper (http://retinajs.com), v0.0.2
+
+(function(){function t(e){this.path=e;var t=this.path.split("."),n=t.slice(0,t.length-1).join("."),r=t[t.length-1];this.at_2x_path=n+"@2x."+r}function n(e){this.el=e,this.path=new t(this.el.getAttribute("src"));var n=this;this.path.check_2x_variant(function(e){e&&n.swap()})}var e=typeof exports=="undefined"?window:exports;e.RetinaImagePath=t,t.confirmed_paths=[],t.prototype.is_external=function(){return!!this.path.match(/^https?\:/i)&&!this.path.match("//"+document.domain)},t.prototype.check_2x_variant=function(e){var n,r=this;if(this.is_external())return e(!1);if(this.at_2x_path in t.confirmed_paths)return e(!0);n=new XMLHttpRequest,n.open("HEAD",this.at_2x_path),n.onreadystatechange=function(){return n.readyState!=4?e(!1):n.status>=200&&n.status<=399?(t.confirmed_paths.push(r.at_2x_path),e(!0)):e(!1)},n.send()},e.RetinaImage=n,n.prototype.swap=function(e){function n(){t.el.complete?(t.el.setAttribute("width",t.el.offsetWidth),t.el.setAttribute("height",t.el.offsetHeight),t.el.setAttribute("src",e)):setTimeout(n,5)}typeof e=="undefined"&&(e=this.path.at_2x_path);var t=this;n()},e.devicePixelRatio>1&&(window.onload=function(){var e=document.getElementsByTagName("img"),t=[],r,i;for(r=0;r<e.length;r++)i=e[r],t.push(new n(i))})})();
+}
 
  /* Let's go! */
 
