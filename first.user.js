@@ -16,8 +16,7 @@
 
 /* -------- Configurable Global variables ----------- */
 
-// var stylesheetURL = "http://raw.github.com/MosheBerman/StudentsFirst/master/css/sf.css";
-// var stylesheetURL = "http://MosheBerman.com/sf.css";
+var stylesheetURL = "https://raw.github.com/MosheBerman/StudentsFirst/master/css/sf.css";
 var petitionLink = "http://www.change.org/petitions/city-university-of-new-york-fix-cuny-first";
 
 /* -------- Scraping related Global variables ----------- */
@@ -35,7 +34,7 @@ var selfServiceFrameLink = "https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/EMPLOYE
 var logoutLink = "https://hrsa.cunyfirst.cuny.edu/psp/cnyhcprd/EMPLOYEE/HRMS/?cmd=logout";
 
 
-var schoolNames = ["Baruch",
+var schoolNames = ["Baruch College",
 "Borough of Manhattan Community College",
 "Brooklyn College",
 "City College of New York",
@@ -58,8 +57,7 @@ var schoolNames = ["Baruch",
 "Queensborough Community College",
 "CUNY School of Public Health",
 "College of Staten Island",
-"York College"
-];
+"York College"];
 
 /* 
  *	School selection
@@ -157,12 +155,12 @@ function main()
 	}
 	else
 	{
-		//Unknown - General clean up	
+		
 		mainMenu();
 	}
 
-//	Install a fresh stylesheet
-	// installCSS();
+	//	Install a fresh stylesheet
+	installCSS();
 
 	//	Clean up breadcrumbs and titles...
 	cleanPage();	
@@ -253,24 +251,22 @@ function mainMenu()
 function installCSS()
 {
 
-	var head = document.getElementsByTagName('head')[0];
+	 var head = document.getElementsByTagName('head')[0];
 
-	var stylesheet = css();
+	// var stylesheet = css();
 
-	var domainSetter = document.getElementsByTagName("script")[0];
+	// var domainSetter = document.getElementsByTagName("script")[0];
 
-	head.insertBefore(stylesheet, domainSetter);
+	head.appendChild(css());
 	
 }
 
 function css()
 {
-var cssNode = document.createElement('link');
-cssNode.type = 'text/plain';
-cssNode.rel = 'stylesheet';
-cssNode.href = stylesheetURL;
-cssNode.media = 'screen';
-cssNode.title = 'dynamicLoadedSheet';
+	var cssNode = document.createElement('link');
+	cssNode.type = 'text/css';
+	cssNode.rel = 'stylesheet';
+	cssNode.href = stylesheetURL;
 	return cssNode;
 }
 /*
