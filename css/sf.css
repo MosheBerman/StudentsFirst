@@ -1,7 +1,17 @@
+/* Center ALL the things! */
+
 body
 {
 	text-align: center;
 }
+
+/* Login/logout/signup page */
+#headerhome
+{
+	background-image: !important url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/header.png");	
+}
+
+/* Custom menu, once logged in */
 
 #students-first-menu
 {
