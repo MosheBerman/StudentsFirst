@@ -1,9 +1,16 @@
+body
+{
+	text-align: center;
+}
+
 #students-first-menu
 {
+	width: 958px;
 	height: 123px;
 	width: 100%;
 	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/header.png");
 	background-repeat: no-repeat;
+	margin: 0px auto;
 }
 
 #students-first-menu a
