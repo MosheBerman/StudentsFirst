@@ -81,7 +81,7 @@ body
 	
 }
 
-#students-first-login-wrapper #submit
+#students-first-login-wrapper #submit, #students-first-login-wrapper #students-first-input-submit
 {
 	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/login/submit.png");
 	background-size: 160px 130px;
