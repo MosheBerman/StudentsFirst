@@ -5,6 +5,8 @@ body
 	text-align: center;
 	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/linen.png");
 	background-repeat: repeat;
+	background-color: #444;
+	color: #fff;
 }
 
 /* ------------------ Login menu ------------------- */
@@ -17,6 +19,7 @@ body
 	background-repeat: no-repeat;
 	height: 400px;
 	width:960px;
+	padding:10px;
 }
 
 #students-first-login-wrapper #students-first-login-title
@@ -30,8 +33,9 @@ body
 #students-first-login-wrapper .students-first-input-text
 {
 	display: block;
-	height: 90px;
-	width: 660px;
+	height: 30px;
+	width: 220px;
+	margin: 5px;
 	background-color: none;
 	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/login/input.png");
 	background-repeat: no-repeat;
