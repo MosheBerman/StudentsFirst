@@ -8,19 +8,17 @@ body
 	display: block;
 	width: 958px;
 	height: 123px;
-	width: 100%;
 	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/header.png");
 	background-repeat: no-repeat;
 	margin: 0px auto;
 }
 
-#students-first-menu a
+#students-first-menu .students-first-menu-link
 {
 	text-decoration: none;
-	margin: 5px 10px;
+	margin: auto 5px 10px 5px;
 	color: #ccc;
 	float: right;
-	margin-bottom: 5px;
 }
 
 #students-first-menu a:hover
