@@ -17,7 +17,7 @@
 /* -------- Configurable Global variables ----------- */
 
 var stylesheetURL = "https://raw.github.com/MosheBerman/StudentsFirst/master/css/sf.css";
-var petitionLink = "http://www.change.org/petitions/city-university-of-new-york-fix-cuny-first";
+var petitionURL = "http://www.change.org/petitions/city-university-of-new-york-fix-cuny-first";
 
 /* -------- Scraping related Global variables ----------- */
 
@@ -30,8 +30,8 @@ var defaultPageParam = "tab=DEFAULT";	//	Default page
 var selfServiceParam = "pt_fname=CO_EMPLOYEE_SELF_SERVICE";	//	The self service page
 
 //A link to the control panel page - it has an iFrame which we want to load as *the* page.
-var selfServiceFrameLink = "https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/EMPLOYEE/HRMS/s/WEBLIB_PTPP_SC.HOMEPAGE.FieldFormula.IScript_AppHP?pt_fname=CO_EMPLOYEE_SELF_SERVICE&PortalActualURL=https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/EMPLOYEE/HRMS/s/WEBLIB_PTPP_SC.HOMEPAGE.FieldFormula.IScript_AppHP&PortalContentURL=https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/EMPLOYEE/HRMS/s/WEBLIB_PTPP_SC.HOMEPAGE.FieldFormula.IScript_AppHP&PortalContentProvider=HRMS&PortalCRefLabel=Base%20Navigation%20Page&PortalRegistryName=EMPLOYEE&PortalServletURI=https://hrsa.cunyfirst.cuny.edu/psp/cnyhcprd/&PortalURI=https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/&PortalHostNode=HRMS&NoCrumbs=yes&PortalCacheContent=true&PSCache-Control=max-age%3d360%2crole&PortalKeyStruct=yes"
-var logoutLink = "https://hrsa.cunyfirst.cuny.edu/psp/cnyhcprd/EMPLOYEE/HRMS/?cmd=logout";
+var selfServiceFrameURL = "https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/EMPLOYEE/HRMS/s/WEBLIB_PTPP_SC.HOMEPAGE.FieldFormula.IScript_AppHP?pt_fname=CO_EMPLOYEE_SELF_SERVICE&PortalActualURL=https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/EMPLOYEE/HRMS/s/WEBLIB_PTPP_SC.HOMEPAGE.FieldFormula.IScript_AppHP&PortalContentURL=https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/EMPLOYEE/HRMS/s/WEBLIB_PTPP_SC.HOMEPAGE.FieldFormula.IScript_AppHP&PortalContentProvider=HRMS&PortalCRefLabel=Base%20Navigation%20Page&PortalRegistryName=EMPLOYEE&PortalServletURI=https://hrsa.cunyfirst.cuny.edu/psp/cnyhcprd/&PortalURI=https://hrsa.cunyfirst.cuny.edu/psc/cnyhcprd/&PortalHostNode=HRMS&NoCrumbs=yes&PortalCacheContent=true&PSCache-Control=max-age%3d360%2crole&PortalKeyStruct=yes"
+var logoutURL = "https://hrsa.cunyfirst.cuny.edu/psp/cnyhcprd/EMPLOYEE/HRMS/?cmd=logout";
 
 
 var schoolNames = ["Baruch College",
@@ -124,7 +124,10 @@ function main()
 	//	Debug confirmation - show that the script is installed
 	console.log("Students First is running. I'm so sorry we have to do this...");
 
-	/* Do some global cleanup first...*/
+	//	Break out of those frames!
+	if (top.location!= self.location) {
+			top.location = self.location.href
+	}
 
 	//	Detect the current page and take action! Action, I say!
 	var currentPage = getCurrentPage();
@@ -175,7 +178,7 @@ function main()
 
  function goToSelfService()
  {
- 	window.location = selfServiceFrameLink;
+ 	window.location = selfServiceFrameURL;
  }
 
 /*
@@ -235,12 +238,12 @@ function mainMenu()
 	var mainMenu = document.createElement("div");
 	mainMenu.setAttribute("id", "students-first-menu");
 
-	var mainMenuButton = link(selfServiceFrameLink, "Main Menu");
+	var mainMenuButton = link(selfServiceFrameURL, "Main Menu");
 	mainMenuButton.setAttribute("id", "students-first-main-menu-link");
 	mainMenuButton.setAttribute("class", "students-first-link");	
 	mainMenu.appendChild(mainMenuButton);
 
-	var logOutButton = link(logoutLink, "Log Out");
+	var logOutButton = link(logoutURL, "Log Out");
 	logOutButton.setAttribute("id", "students-first-logout-link");
 	logOutButton.setAttribute("class", "students-first-link");	
 	mainMenu.appendChild(logOutButton);
@@ -288,9 +291,11 @@ function mainMenuLoginPage()
 
 	/* Build out the nav UI Menu. */
 
-	var menu = document.getElementById("mainnav");
+	var mainnav =  document.getElementById("mainnav");
+	var menu = document.getElementById("menu");
 
 	//	Clear the menu, and replace it with the new menu
+	mainnav.innerHTML = "";
 	menu.innerHTML = "";
 	menu.appendChild(navList());
 
@@ -321,15 +326,17 @@ function navList()
 	var list = document.createElement("ul");
 
 	//	Move the "password links to the top"
-	var claimLink = listNodeWithLink("https://impweb.cuny.edu/selfservice/activation/start.action", "Get a Username");
-	var forgotLink = listNodeWithLink("https://impweb.cuny.edu/selfservice/activation/start.action", "I Forgot My Password");
-	var changeLink = listNodeWithLink("https://impweb.cuny.edu/selfservice/changepwd/start.action", "I Want to Change My Password");	
-	var aboutLink = listNodeWithLink("https://github.com/MosheBerman/StudentsFirst", "About Students First");
+	var claimURL = listNodeWithURL("https://impweb.cuny.edu/selfservice/activation/start.action", "Get a Username");
+	var forgotURL = listNodeWithURL("https://impweb.cuny.edu/selfservice/activation/start.action", "I Forgot My Password");
+	var changeURL = listNodeWithURL("https://impweb.cuny.edu/selfservice/changepwd/start.action", "I Want to Change My Password");	
+	var petitionURL = listNodeWithURL(petitionURL, "Tell CUNY to Put Students First!");
+	var aboutURL = listNodeWithURL("https://github.com/MosheBerman/StudentsFirst", "About Students First");
 
-	list.appendChild(forgotLink);
-	list.appendChild(changeLink);	
-	list.appendChild(claimLink);
-	list.appendChild(aboutLink);
+	list.appendChild(forgotURL);
+	list.appendChild(changeURL);	
+	list.appendChild(claimURL);
+	list.appendChild(aboutURL);
+	list.appendChild(petitionURL);
 	
 	return list;	
 }
@@ -368,7 +375,7 @@ function navList()
  }
 
 //	Create a link and wrap it in a list element
-function listNodeWithLink(url, content)
+function listNodeWithURL(url, content)
 {
 	
 	// Create a list node
