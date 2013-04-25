@@ -50,18 +50,22 @@ body
 
 #students-first-login-wrapper .students-first-input-text
 {
-	display: block;
-	height: 60px;
-	width: 440px;
-	margin: 5px;
+	
 	background-color: transparent;
 	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/login/input.png");
 	background-repeat: no-repeat;
 	background-size: 440px 60px;
 	border: none;
+	color: #7b7b7b;	
+	display: block;
+	font-family: Verdana, Helvetica, sans-serif;	
+	font-size: 22px;
+	font-weight: bold;
+	height: 60px;
+	margin: 5px;	
 	padding: 0 10px !important;
-	font-family: Verdana, Helvetica, sans-serif;
-	color: #7b7b7b;
+	width: 440px;
+	
 }
 
 #students-first-login-wrapper .students-first-input-submit
