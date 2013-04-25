@@ -19,8 +19,8 @@ body
 	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/login/background.png");
 	background-repeat: no-repeat;
 	height: 400px;
-	width:960px;
-	padding:15px;
+	width: 960px;
+	padding: 35px;
 }
 
 #students-first-login-wrapper #students-first-login-title
@@ -32,7 +32,7 @@ body
 	float: left;
 	clear: both;
 	height: 50px;
-	margin: 20px 0px 10px 20px;
+	margin: 20px 0px 10px 0px;
 }
 
 #students-first-login-wrapper #students-first-login-title strong
