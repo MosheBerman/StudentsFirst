@@ -14,8 +14,8 @@ body
 
 #container #mainnav
 {
+	background-image: none;	
 	background-image: !important url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/header.png");	
-	background-image: none;
 }
 
 /* Custom menu, once logged in */
