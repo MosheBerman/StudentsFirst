@@ -23,15 +23,6 @@ Students first makes several changes to CUNY First. When you log on to CUNY Firs
 4. I've removed the images from the Student Center menus, because they were ugly. I may put them back in the future.
 5. When you log out, you'll be automatically redirected to the login page. Convenience my friends. It's all about the clicks.
 
-System Requirements:
----
-Students First has been developed and tested on on Google Chrome, Mozilla Firefox, and Safari 6 for OS X 10.8. It's also been tested on Chrome for Windows. See "Setting It Up" for details.
-
-
-A Note For Faculty:
----
-
-If you're faculty, don't use this yet, because Students First skips the main menu, and jumps to the Student Center. You'll miss your stop. Once I can see what the faculty login/menu looks like, I can wire it all up correctly. Hang tight for now. (If you want to show me your menu, [email me](mailto:mosheberman@icloud.com).)
 
 Setting It Up:
 ---
@@ -39,6 +30,13 @@ Setting It Up:
 If you're on a Mac, you can install it in Safari by downloading [this extension](https://github.com/MosheBerman/StudentsFirst/blob/master/extensions/safari/output/StudentsFirst.safariextz?raw=true). Just double click it, and Safari will install it.
 
 If you're using Chrome, download [first.user.js](https://raw.github.com/MosheBerman/StudentsFirst/master/first.user.js) and install it. Open Settings, click "Extensions", and drag it in. For Firefox, the process should be similar. If you're having trouble, search the web for "Installing a userscript in Firefox."
+
+Tested on on Chrome, Firefox, and Safari 6 for OS X 10.8. 
+
+A Note For Faculty:
+---
+
+If you're faculty, don't use this yet, because Students First skips the main menu, and jumps to the Student Center. You'll miss your stop. Once I can see what the faculty login/menu looks like, I can wire it all up correctly. Hang tight for now. (If you want to show me your menu, [email me](mailto:mosheberman@icloud.com).)
 
 How it Works:
 ---
