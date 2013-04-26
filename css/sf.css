@@ -13,7 +13,7 @@ body
 
 /* ---- CUNY FIRST ----- */
 
-#PSPAGECONTAINER, #PAGECONTAINER
+#PSPAGECONTAINER, #PAGECONTAINER, .EOPP_SCPAGEBORDER
 {
 	width: 960px;
 	margin: auto;
@@ -54,7 +54,7 @@ td a:hover
 	margin: 20px auto;
 	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/login/background.png");
 	background-repeat: no-repeat;
-	height: 400px;
+	height: 340px;
 	width: 960px;
 	padding: 35px;
 }
