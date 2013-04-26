@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Author</key>
+	<string>Moshe Berman</string>
+	<key>Builder Version</key>
+	<string>8536.29.13</string>
+	<key>CFBundleDisplayName</key>
+	<string>Students First</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.mosheberman.studentsfirst</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.1</string>
+	<key>CFBundleVersion</key>
+	<string>5</string>
+	<key>Chrome</key>
+	<dict>
+		<key>Database Quota</key>
+		<real>1048576</real>
+	</dict>
+	<key>Content</key>
+	<dict>
+		<key>Scripts</key>
+		<dict>
+			<key>End</key>
+			<array>
+				<string>first.user.js</string>
+			</array>
+		</dict>
+		<key>Stylesheets</key>
+		<array>
+			<string>sf.css</string>
+		</array>
+	</dict>
+	<key>Description</key>
+	<string>Students First fixes CUNY First</string>
+	<key>ExtensionInfoDictionaryVersion</key>
+	<string>1.0</string>
+	<key>Permissions</key>
+	<dict>
+		<key>Website Access</key>
+		<dict>
+			<key>Allowed Domains</key>
+			<array>
+				<string>*.cunyfirst.cuny.edu</string>
+				<string>*.impweb.cuny.edu</string>
+				<string>impweb.cuny.edu</string>
+				<string>cunyfirst.cuny.edu</string>
+			</array>
+			<key>Include Secure Pages</key>
+			<true/>
+			<key>Level</key>
+			<string>Some</string>
+		</dict>
+	</dict>
+	<key>Update Manifest URL</key>
+	<string>http://mosheberman.com/studentsfirst/safara/manifest.plist</string>
+	<key>Website</key>
+	<string>http://mosheberman.com</string>
+</dict>
+</plist>

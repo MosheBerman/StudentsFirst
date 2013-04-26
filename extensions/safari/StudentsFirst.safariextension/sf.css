@@ -1,0 +1,172 @@
+/* Center ALL the things! */
+
+body
+{
+	text-align: center;
+	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/linen.png");
+	background-repeat: repeat;
+	background-color: #444;
+	color: #fff;
+	font-family: Verdana, Helvetica, sans-serif;
+	border: none;
+}
+
+/* ---- CUNY FIRST ----- */
+
+#PSPAGECONTAINER, #PAGECONTAINER, .EOPP_SCPAGEBORDER
+{
+	width: 960px;
+	margin: auto;
+}
+
+.PSPAGECONTAINER
+{
+	width: 952 !important;
+}
+
+td a img
+{
+	display: none;
+}
+
+td a
+{
+	margin: 2px !important;
+	text-decoration: none !important;
+	color: #004f85 !important;	
+}
+
+td a:hover
+{
+	color: #0080c3 !important;
+}
+
+.EOPP_SCADDITIONALTEXT
+{
+	display: none;
+}
+
+/* ------------------ Login menu ------------------- */
+
+#students-first-login-wrapper
+{
+
+	margin: 20px auto;
+	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/login/background.png");
+	background-repeat: no-repeat;
+	height: 400px;
+	width: 960px;
+	padding: 35px;
+}
+
+#students-first-login-wrapper #students-first-login-title
+{
+	color: #fff !important;
+	text-shadow: 0px 1px 1px #000;
+	font-size: 32px;
+	font-weight: normal;
+	float: left;
+	clear: both;
+	height: 50px;
+	margin: 20px 0px 10px 0px;
+}
+
+#students-first-login-wrapper #students-first-login-title strong
+{
+	font-weight: bold;
+	font-size: 44px;
+}
+
+#students-first-login-wrapper form
+{
+	clear: both;
+}	
+
+
+
+#students-first-login-wrapper .students-first-input-text
+{
+	
+	background-color: transparent;
+	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/login/input.png");
+	background-repeat: no-repeat;
+	background-size: 440px 60px;
+	border: none;
+	color: #7b7b7b;	
+	display: block;
+	font-family: Verdana, Helvetica, sans-serif;	
+	font-size: 22px;
+	font-weight: bold;
+	height: 60px;
+	margin: 5px;	
+	padding: 0 10px !important;
+	width: 440px;
+	
+}
+
+#students-first-login-wrapper #submit
+{
+	display: block;
+	height: 130px;
+	width: 160px;
+	background-color: transparent;
+	border: 0;
+	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/login/arrow.png") !important;
+	background-size: 160px 130px;
+	margin-top:-130px;
+	margin-left: 440px;
+	color: transparent;
+}
+
+#students-first-login-wrapper ul
+{
+	list-style-type: none;
+	width: 640px;
+	margin: auto;
+	padding: 0;
+	text-align: center;
+}
+
+#students-first-login-wrapper ul li 
+{
+	margin: 0 auto;
+}
+
+#students-first-login-wrapper ul li a
+{
+	color: #fff;
+	text-decoration: none;
+	float: left;
+	margin: 0 10px;
+}
+
+#students-first-login-wrapper ul li a:hover
+{
+	color: #ccc;
+	background-color: transparent !important;
+}
+/* ------------ Custom menu, once logged in. --------------- */
+#students-first-menu
+{
+	display: block;
+	width: 958px;
+	height: 123px;
+	background-image: url("https://raw.github.com/MosheBerman/StudentsFirst/master/images/header.png");
+	background-repeat: no-repeat;
+	margin: 0px auto;
+}
+
+#students-first-menu .students-first-link
+{
+	text-decoration: none;
+	margin: 5px 10px;
+	color: #ccc;
+	float: right;
+	margin-bottom: 5px;
+	margin-top: 100px;
+}
+
+#students-first-menu a:hover
+{
+	color: #fff;
+}
