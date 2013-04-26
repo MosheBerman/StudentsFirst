@@ -40,14 +40,14 @@ If you're faculty, don't use this yet, because Students First skips the main men
 
 How it Works:
 ---
-Students First is like putting a little makeup on CUNY First. It doesn't change anything about the system, but it changes CUNY First, so it looks more attractive. 
+Students First is like putting a little makeup on CUNY First. It doesn't change anything about the system, but it changes the way things look, so it looks more attractive. 
 
-From a technical perspective, Students First is a userscript that rewrites parts of the CUNY First webpages' DOM on the fly to insert custom CSS and custom DOM nodes where necessary.
+From a technical perspective, Students First is a userscript that rewrites parts of the CUNY First DOM on the fly to insert custom CSS and custom DOM nodes where necessary.
 
 Is It Secure?
 ---
 
-Students First never touches your personal information, nor does it change anything on CUNY's servers. It's as secure as CUNY First itself.
+Students First never touches your personal information, nor does it change anything on CUNY's servers. It's as secure as CUNY First itself. That, my friends, is up to Oracle and CUNY.
 
 
 License:
